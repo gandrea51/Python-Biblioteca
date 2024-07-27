@@ -68,9 +68,11 @@ def home():
             user_count = Utente.query.filter_by(ruolo='Socio').count()
             prestiti_in_corso = Prestito.query.filter_by(terminato="No").count()
             prenotazioni_count = Prenotazioni.query.count()
-        return render_template('home.html', utente = current_user, user_count = user_count,
-            prestiti_in_corso = prestiti_in_corso,
-            prenotazioni_count = prenotazioni_count)
+            return render_template('home.html', utente = current_user, user_count = user_count,
+                prestiti_in_corso = prestiti_in_corso,
+                prenotazioni_count = prenotazioni_count)
+        else:
+            return render_template('home.html', utente = current_user)
     else:
         return redirect(url_for(login))
 
