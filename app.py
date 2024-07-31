@@ -169,7 +169,7 @@ def cambia_telefono():
     return render_template('cambia_telefono.html')
 
 # Modifica del Testo
-@app.route('/testo/edit/<int:testo_id>', methods=['POST'])
+@app.route('/testo/<int:testo_id>/edit', methods=['POST'])
 @login_required
 def edit_page(testo_id):
     testo = db.session.get(Testo, testo_id)    
@@ -216,7 +216,7 @@ class Prestito(db.Model):
     utente = db.relationship('Utente', backref=db.backref('prestiti', lazy=True))
 
 # Index del Libro
-@app.route('/libro')
+@app.route('/libri')
 def libro_index():
     if current_user.is_authenticated:
         # Libro del mese, se c'è
@@ -246,7 +246,7 @@ def libro_index():
         return render_template('libro_non_loggato.html', generi = generi, testo = testo)
 
 # Libri di un certo genere
-@app.route('/libro/genere/<genere>')
+@app.route('/libri/<genere>')
 @login_required
 def libro_genere(genere):
     # Query
@@ -256,7 +256,7 @@ def libro_genere(genere):
     return render_template('libro_genere.html', libri = libri, testo = testo)
 
 # Stampa dei libri del genere scelto
-@app.route('/libro/<genere>')
+@app.route('/libri/<genere>/pdf')
 @login_required
 def libro_pdf(genere):
     # Query
@@ -268,7 +268,7 @@ def libro_pdf(genere):
     return send_file(pdf_path, as_attachment=True)
 
 # Ricerca per Titolo
-@app.route('/libro/titolo', methods=['POST'])
+@app.route('/libri/titolo', methods=['POST'])
 @login_required
 def libro_titolo():
     titolo = request.form.get('titolo')
@@ -279,7 +279,7 @@ def libro_titolo():
     return render_template('libro_titolo.html', libri = libri, testo = testo)
 
 # Ricerca per Autore
-@app.route('/libro/autore', methods=['POST'])
+@app.route('/libri/autore', methods=['POST'])
 @login_required
 def libro_autore():
     autore = request.form.get('nome')
@@ -290,7 +290,7 @@ def libro_autore():
     return render_template('libro_autore.html', libri = libri, testo = testo)
 
 # Ricerca per Genere
-@app.route('/libro/genere', methods=['POST'])
+@app.route('/libri/genere', methods=['POST'])
 @login_required
 def libro_rgenere():
     genere = request.form.get('nome')
@@ -301,7 +301,7 @@ def libro_rgenere():
     return render_template('libro_rgenere.html', libri = libri, testo = testo)
 
 # Show di un libro
-@app.route('/libro/show/<int:libro_id>')
+@app.route('/libro/<int:libro_id>')
 @login_required
 def libro_show(libro_id):
     # Query
@@ -339,7 +339,7 @@ def libro_show(libro_id):
     return render_template('libro_show.html', libro = libro, copie = copie, rientro = rientro, testo = testo)
 
 # Stampa della scheda di un Libro
-@app.route('/libro/pdf/<int:libro_id>')
+@app.route('/libro/<int:libro_id>/pdf')
 @login_required
 def scheda_libro(libro_id):
     # Query
@@ -382,7 +382,7 @@ def libro_create():
     return render_template('libro_create.html')
 
 # Modifica di un Libro
-@app.route('/libro/edit/<int:libro_id>', methods=['GET', 'POST'])
+@app.route('/libro/<int:libro_id>/edit', methods=['GET', 'POST'])
 @login_required
 def libro_edit(libro_id):
     libro = Libro.query.get(libro_id)
@@ -409,7 +409,7 @@ def libro_edit(libro_id):
     return render_template('libro_edit.html', libro = libro)
 
 # Eliminazione di un Libro
-@app.route('/libro/delete/<int:libro_id>', methods=['POST'])
+@app.route('/libro/<int:libro_id>/delete', methods=['POST'])
 @login_required
 def libro_delete(libro_id):
     libro = Libro.query.get(libro_id)
@@ -420,7 +420,7 @@ def libro_delete(libro_id):
     return redirect(url_for('libro_index'))
 
 # Modifica del Genere
-@app.route('/libro/modifica_genere/<genere>', methods=['POST'])
+@app.route('/libro/<genere>/modifica', methods=['POST'])
 @login_required
 def modifica_genere(genere):
     if request.method == 'POST':
@@ -461,7 +461,7 @@ def imposta_si():
     return redirect(url_for('libro_index'))
 
 # Index dei Prestiti
-@app.route('/prestito')
+@app.route('/prestiti')
 @login_required
 def index():
     # Query 
@@ -508,6 +508,15 @@ def prestiti_admin_pdf():
     
     return send_file(pdf_path, as_attachment=True)
 
+@app.route('/suggest', methods=['GET'])
+def suggest():
+    query = request.args.get('query', '')
+    suggestions = []
+    if query:
+        books = Libro.query.filter(Libro.titolo.ilike(f'%{query}%')).all()
+        suggestions = [book.titolo for book in books]
+    return jsonify(suggestions)
+
 # Aggiunta di un prestito
 @app.route('/prestito/create', methods=['GET', 'POST'])
 @login_required
@@ -540,7 +549,7 @@ def create_prestito():
     return render_template('prestito_create.html')
 
 # Estensione del prestito
-@app.route('/prestito/extend/<int:prestito_id>')
+@app.route('/prestito/<int:prestito_id>/extend')
 @login_required
 def extend(prestito_id):
     prestito = db.session.get(Prestito, prestito_id)
@@ -556,7 +565,7 @@ def extend(prestito_id):
     return redirect(url_for('index'))
 
 # Rotta Terminazione Prestito
-@app.route('/prestito/termina/<int:prestito_id>')
+@app.route('/prestito/<int:prestito_id>/termina')
 @login_required
 def termina(prestito_id):
     prestito = db.session.get(Prestito, prestito_id)
@@ -571,7 +580,7 @@ def termina(prestito_id):
     return redirect(url_for('index'))
 
 # Rotta Delete Prestito
-@app.route('/prestito/delete/<int:prestito_id>', methods=['POST'])
+@app.route('/prestito/<int:prestito_id>/delete', methods=['POST'])
 @login_required
 def prestito_delete(prestito_id):
     prestito = db.session.get(Prestito, prestito_id)
@@ -621,6 +630,8 @@ def corso_index():
     if current_user.is_authenticated:
         corsi = Corso.query.all()
         testo = Testo.query.filter_by(posizione = 'corso_index').first()
+        for corso in corsi:
+            corso.posti_rimasti = corso.massimo - corso.prenotazioni        
         # Statistiche
         total_view = db.session.query(db.func.sum(Corso.viste)).scalar() or 0
         top_courses = Corso.query.order_by(Corso.viste.desc()).limit(3).all()
@@ -637,7 +648,7 @@ def corso_index():
         return render_template('corso_non_loggato.html', corsi = corsi, testo = testo)
 
 # Incrementa Visite al corso
-@app.route('/corso/incrementa_visite/<int:corso_id>', methods=['POST'])
+@app.route('/corso/<int:corso_id>/incrementa_visite', methods=['POST'])
 def incrementa_visite(corso_id):
     corso = db.session.get(Corso, corso_id)
     if corso:
@@ -683,7 +694,7 @@ def corso_create():
     return render_template('corso_create.html')
 
 # Modifica di un Corso
-@app.route('/corso/edit/<int:corso_id>', methods=['GET', 'POST'])
+@app.route('/corso/<int:corso_id>/edit', methods=['GET', 'POST'])
 @login_required
 def corso_edit(corso_id):
     corso = db.session.get(Corso, corso_id)
@@ -712,7 +723,7 @@ def corso_edit(corso_id):
     return render_template('corso_edit.html', corso = corso)
 
 # Eliminazione di un corso
-@app.route('/corso/delete/<int:corso_id>', methods=['POST'])
+@app.route('/corso/<int:corso_id>/delete', methods=['POST'])
 @login_required
 def corso_delete(corso_id):
     corso = Corso.query.get(corso_id)
@@ -724,7 +735,7 @@ def corso_delete(corso_id):
     return redirect(url_for('corso_index'))
 
 # Index prenotazione
-@app.route('/prenotazione')
+@app.route('/prenotazioni')
 @login_required
 def booking_index():
     titolo = ""
@@ -744,6 +755,15 @@ def booking_index():
     testo = Testo.query.filter_by(posizione = 'prenotazione_index').first()
     
     return render_template('prenotazioni_index.html', prenotazioni_per_corso = prenotazioni_per_corso, titolo = titolo, testo = testo)
+
+@app.route('/suggerimento', methods=['GET'])
+def suggerimento():
+    query = request.args.get('query', '')
+    suggestions = []
+    if query:
+        corsi = Corso.query.filter(Corso.nome.like(f'%{query}%')).all()
+        suggestions = [corso.nome for corso in corsi]
+    return jsonify(suggestions)
 
 # Aggiunta di una prenotazione
 @app.route('/prenotazione/create', methods=['GET', 'POST'])
@@ -771,7 +791,7 @@ def create_prenotazione():
     return render_template('prenotazioni_create.html', error = error, nome = nome)
 
 # Eliminazione di una prenotazione
-@app.route('/prenotazione/delete/<int:prenotazione_id>', methods=['POST'])
+@app.route('/prenotazione/<int:prenotazione_id>/delete', methods=['POST'])
 @login_required
 def prenotazione_delete(prenotazione_id):
     prenotazione = db.session.get(Prenotazioni, prenotazione_id)
@@ -790,7 +810,7 @@ def prenotazione_delete(prenotazione_id):
     return redirect(url_for('booking_index'))
 
 # Conferma prenotazione
-@app.route('/prenotazione/conferma/<int:prenotazione_id>', methods=['GET'])
+@app.route('/prenotazione/<int:prenotazione_id>/conferma', methods=['GET'])
 @login_required
 def conferma_prenotazione(prenotazione_id):
     prenotazione = db.session.get(Prenotazioni, prenotazione_id)
@@ -807,7 +827,7 @@ def conferma_prenotazione(prenotazione_id):
     return redirect(url_for('booking_index'))
 
 # Stampa prenotazione (Socio)
-@app.route('/prenotazione/pdf/<corso_id>')
+@app.route('/prenotazione/<corso_id>/pdf')
 @login_required
 def prenotazione_pdf(corso_id):
     prenotazioni = Prenotazioni.query.filter_by(corso_id = corso_id).all()
@@ -817,7 +837,7 @@ def prenotazione_pdf(corso_id):
     return send_file(pdf_path, as_attachment=True)
 
 # Stampa prenotazioni (Admin)
-@app.route('/prenotazione/admin/pdf/<corso_id>')
+@app.route('/prenotazioni/<corso_id>/pdf')
 @login_required
 def prenotazione_admin_pdf(corso_id):
     prenotazioni = Prenotazioni.query.filter_by(corso_id = corso_id).all()
@@ -827,7 +847,7 @@ def prenotazione_admin_pdf(corso_id):
     return send_file(pdf_path, as_attachment=True)
 
 # Index Utenti
-@app.route('/utente', methods=['GET'])
+@app.route('/utenti', methods=['GET'])
 @login_required
 def index_utente():
     utenti = Utente.query.all()
@@ -837,7 +857,7 @@ def index_utente():
     return render_template('utente_index.html', utenti = utenti)
 
 # Modifica utente, inutilizzata
-@app.route('/utente/edit/<int:utente_id>', methods=['GET', 'POST'])
+@app.route('/utente/<int:utente_id>/edit', methods=['GET', 'POST'])
 @login_required
 def utente_edit(utente_id):
     utente = db.session.get(Utente, utente_id)
@@ -847,10 +867,11 @@ def utente_edit(utente_id):
 
         db.session.commit()
         return redirect(url_for('index_utente'))
+    
     return render_template('utente_edit.html', utente = utente)
 
 # Stampa degli utenti
-@app.route('/utente/pdf')
+@app.route('/utenti/pdf')
 @login_required
 def utente_pdf():
     utenti = Utente.query.all()
@@ -859,6 +880,7 @@ def utente_pdf():
         utente.prenotazioni_count = Prenotazioni.query.filter_by(utente_id=utente.id).count()
     html_string = render_template('utente_pdf.html', utenti = utenti)
     pdf_path = convert_html_to_pdf(html_string)
+    
     return send_file(pdf_path, as_attachment=True)
 
 # Gruppo di lettura
@@ -866,6 +888,7 @@ def utente_pdf():
 @login_required
 def gruppo_lettura():
     month = Libro.query.filter_by(libro_mese = 'Si').first()
+   
     return render_template('gruppo_lettura.html', month = month)
 
 if __name__ == '__main__':
