@@ -144,7 +144,18 @@
                                 <span class="corso_desc">Si tiene {{ corso.giorno }} per {{ corso.lezioni }} lezioni<br>
                                 Contributo per l'iscrizione: {{ corso.contributo }}€ + {{ corso.tessera }}€ per la tessera</span><br><br>
                                 {% if corso.prenotazioni <= corso.massimo or corso.iscrizioni <= corso.massimo %}
-                                    <span class="prenotati">Non perdere il posto!<br><a href="/prenotazione/create" class="btn btn-light">Prenota ora</a></span>
+                                    <span class="prenotati">    
+                                        {% if corso.posti_rimasti >= 8 %}
+                                            Ancora molti posti disponibili! Prenota ora!
+                                        {% elif corso.posti_rimasti > 5 %}
+                                            Affrettati, i posti stanno finendo! Solo {{ corso.posti_rimasti }} posti rimasti.
+                                        {% elif corso.posti_rimasti >= 2 %}
+                                            Ultimi posti disponibili! Solo {{ corso.posti_rimasti }} posti rimasti.
+                                        {% else %}
+                                            Ultimo posto disponibile!
+                                        {% endif %} 
+                                        <br>
+                                        <a href="/prenotazione/create" class="btn btn-light">Prenota ora</a></span>
                                 {% endif %}
                             </p>
                             <button onclick="toggleVisibilityAndUpdate('{{ corso.id }}')" class="btn btn-dark">Maggiori info</button>
@@ -175,7 +186,7 @@
             $("#programma" + corsoId).slideToggle("slow");
 
             // Increment visit count via AJAX
-            $.post('/corso/incrementa_visite/' + corsoId);
+            $.post('/corso/' + corsoId + '/incrementa_visite');
         }
 
         function toggleForm(textoId, formId) {

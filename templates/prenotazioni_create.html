@@ -35,6 +35,20 @@
         color: red;
         margin-top: 10px;
     }
+    .suggestions {
+        border: 1px solid #ccc;
+        max-height: 150px;
+        overflow-y: auto;
+    }
+
+    .suggestion {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .suggestion:hover {
+        background-color: #f0f0f0;
+    }
 </style>
 {% endblock %}
 
@@ -57,7 +71,8 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="nome" class="form-label">Nome del Corso</label>
-                        <input type="text" id="nome" name="nome" class="form-control" value="{{ nome }}" required>
+                        <input type="text" id="nome" name="nome" class="form-control" value="{{ nome }}" required autocomplete="off">
+                        <div class="suggestions" id="suggestions"></div>
                         <div class="form-text">Nome del corso a cui desideri iscriverti.</div>
                         {% if error %}
                             <p class="error-message">{{ error }}</p>
@@ -79,4 +94,26 @@
             <br>
         </form>
     </div>
+    <script>
+        $(document).ready(function() {
+            $('#nome').on('input', function() {
+                let query = $(this).val();
+                if (query.length >= 2) {
+                    $.get('/suggerimento', {query: query}, function(data) {
+                        $('#suggestions').empty();
+                        data.forEach(function(title) {
+                            $('#suggestions').append('<div class="suggestion">' + title + '</div>');
+                        });
+                    });
+                } else {
+                    $('#suggestions').empty();
+                }
+            });
+
+            $(document).on('click', '.suggestion', function() {
+                $('#nome').val($(this).text());
+                $('#suggestions').empty();
+            });
+        });
+    </script>
 {% endblock %}

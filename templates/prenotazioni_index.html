@@ -155,7 +155,7 @@
                                                         <div class="modal-body">
                                                             {% if prenotazione.stato == "Prenotato" %}
                                                                 <p><strong>{{ prenotazione.utente.nome }}</strong>, la tua prenotazione è stata registrata con successo e ora è in attesa di pagamento.</p>
-                                                                {% if current_user.ruolo != "Amministratore" %}    
+                                                                {% if current_user.nome == prenotazione.utente.nome %}    
                                                                     <p>Per completare la tua prenotazione e confermare il posto, ti chiediamo di compilare il modulo al link sottostante. Nel modulo, potrai richiedere le coordinate bancarie necessarie per effettuare il pagamento di <strong>{{ prenotazione.corso.contributo }}€</strong>.</p>
                                                                     <p>Clicca sul pulsante per accedere al modulo e inserire la tua richiesta:</p>
                                                                     <a href="https://forms.gle/CxCMDByTULSW4Nsn8" class="btn btn-success" target="_blank">Richiedi Coordinate Bancarie</a>

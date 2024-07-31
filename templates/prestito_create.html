@@ -31,6 +31,20 @@
         background-color: #218838;
         border-color: #1e7e34;
     }
+    .suggestions {
+        border: 1px solid #ccc;
+        max-height: 150px;
+        overflow-y: auto;
+    }
+
+    .suggestion {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .suggestion:hover {
+        background-color: #f0f0f0;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -53,7 +67,8 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="titolo" class="form-label">Titolo del Libro</label>
-                        <input type="text" id="titolo" name="titolo" class="form-control" required>
+                        <input type="text" id="titolo" name="titolo" class="form-control" required autocomplete="off">
+                        <div class="suggestions" id="suggestions"></div>
                         <div class="form-text">Inserisci il titolo del libro che desideri prendere in prestito.</div>
                     </div>
                 </div>
@@ -86,4 +101,27 @@
             <br>
         </form>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#titolo').on('input', function() {
+                let query = $(this).val();
+                if (query.length >= 2) {
+                    $.get('/suggest', {query: query}, function(data) {
+                        $('#suggestions').empty();
+                        data.forEach(function(title) {
+                            $('#suggestions').append('<div class="suggestion">' + title + '</div>');
+                        });
+                    });
+                } else {
+                    $('#suggestions').empty();
+                }
+            });
+
+            $(document).on('click', '.suggestion', function() {
+                $('#titolo').val($(this).text());
+                $('#suggestions').empty();
+            });
+        });
+    </script>
 {% endblock %}
