@@ -7,6 +7,7 @@ from datetime import *
 from xhtml2pdf import pisa
 import math
 import tempfile
+import re
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'why would I tell you my secret key?'
@@ -52,6 +53,25 @@ def convert_html_to_pdf(source_html):
     pdf_file.close()
     return pdf_file.name
 
+# Controlli alla password
+def is_password_valid(password):
+    if len(password) < 8:
+        return False, "La password deve contenere almeno 8 caratteri."
+    if not re.search("[a-z]", password):
+        return False, "La password deve contenere almeno una lettera minuscola."
+    if not re.search("[A-Z]", password):
+        return False, "La password deve contenere almeno una lettera maiuscola."
+    if not re.search("[0-9]", password):
+        return False, "La password deve contenere almeno un numero."
+    if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password): 
+        return False, "La password deve contenere almeno un simbolo."
+    return True, ""
+
+def is_email_valid(email):
+    if Utente.query.filter_by(email = email).first() is not None:
+        return False, "L'indirizzo email è già presente."
+    return True, ""
+
 # Welcome --> Pagina esterna
 @app.route('/')
 def welcome():
@@ -88,7 +108,18 @@ def registrazione():
     if request.method == 'POST':
         nome = request.form.get('nome')
         email = request.form.get('email')
-        password = generate_password_hash(request.form.get('password'))
+        is_valid, error_message = is_email_valid(email)
+        if not is_valid:
+            flash(error_message, 'danger')
+            return redirect(url_for('registrazione'))
+        
+        password = request.form.get('password')
+        is_valid, error_message = is_password_valid(password)
+        if not is_valid:
+            flash(error_message, 'danger')
+            return redirect(url_for('registrazione'))
+        password = generate_password_hash(password)
+        
         telefono = request.form.get('telefono')
         ruolo = request.form.get('ruolo')
 
@@ -125,10 +156,14 @@ def cambia_password():
     if request.method == 'POST':
         vecchia = request.form.get('vecchia')
         nuova = request.form.get('nuova')
+        is_valid, error_message = is_password_valid(nuova)
+        if not is_valid:
+            flash(error_message, 'danger')
+            return redirect(url_for('cambia_password'))
+        nuova = generate_password_hash(nuova)
 
         # Verifica che la vecchia password sia corretta
         if check_password_hash(current_user.password, vecchia):
-            # Aggiorna la password nel database
             current_user.password = generate_password_hash(nuova)
             db.session.commit()
             return redirect(url_for('home'))
