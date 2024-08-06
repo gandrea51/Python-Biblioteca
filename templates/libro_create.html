@@ -58,7 +58,7 @@
         <!-- Titolo -->
         <div class="form-group mb-4">
             <label for="titolo">Titolo</label>
-            <input id="titolo" class="form-control" name="titolo" type="text" placeholder="Inserisci il titolo del libro">
+            <input required id="titolo" class="form-control" name="titolo" type="text" placeholder="Inserisci il titolo del libro">
             <small class="form-text">Titolo del libro</small>
         </div>
 
@@ -67,21 +67,21 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="anno">Anno</label>
-                    <input id="anno" class="form-control" name="anno" type="text" placeholder="Anno di pubblicazione">
+                    <input required id="anno" class="form-control" name="anno" type="text" placeholder="Anno di pubblicazione">
                     <small class="form-text">Anno di pubblicazione del libro</small>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="classificazione">Classificazione</label>
-                    <input id="classificazione" class="form-control" name="classificazione" type="text" placeholder="Classificazione del libro">
+                    <input required id="classificazione" class="form-control" name="classificazione" type="text" placeholder="Classificazione del libro">
                     <small class="form-text">Classificazione del libro</small>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="posizione">Posizione</label>
-                    <input id="posizione" class="form-control" name="posizione" type="text" placeholder="Posizione del libro">
+                    <input required id="posizione" class="form-control" name="posizione" type="text" placeholder="Posizione del libro">
                     <small class="form-text">Posizione del libro</small>
                 </div>
             </div>
@@ -92,14 +92,14 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="autore">Autore</label>
-                    <input id="autore" class="form-control" name="autore" type="text" placeholder="Autore del libro">
+                    <input required id="autore" class="form-control" name="autore" type="text" placeholder="Autore del libro">
                     <small class="form-text">Autore del libro</small>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="genere">Genere</label>
-                    <input id="genere" class="form-control" name="genere" type="text" placeholder="Genere del libro">
+                    <input required id="genere" class="form-control" name="genere" type="text" placeholder="Genere del libro">
                     <small class="form-text">Genere del libro</small>
                 </div>
             </div>
@@ -113,7 +113,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="editore">Editore</label>
-                    <input id="editore" class="form-control" name="editore" type="text" placeholder="Casa editrice del libro">
+                    <input required id="editore" class="form-control" name="editore" type="text" placeholder="Casa editrice del libro">
                     <small class="form-text">Casa editrice del libro</small>
                 </div>
             </div>
@@ -131,14 +131,14 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="copie">Numero di Copie</label>
-                    <input id="copie" class="form-control" name="copie" type="number" placeholder="Numero di copie">
+                    <input required id="copie" class="form-control" name="copie" type="number" placeholder="Numero di copie">
                     <small class="form-text">N. di copie presenti del libro</small>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="disponibile">Disponibilità</label>
-                    <select id="disponibile" class="form-select" name="disponibile">
+                    <select required id="disponibile" class="form-select" name="disponibile">
                         <option value="Si">Disponibile</option>
                         <option value="No">Non Disponibile</option>
                     </select>
@@ -148,7 +148,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="libro_mese">Libro del Mese</label>
-                    <select id="libro_mese" class="form-select" name="libro_mese">
+                    <select required id="libro_mese" class="form-select" name="libro_mese">
                         <option value="Si">Sì</option>
                         <option value="No" selected>No</option>
                     </select>
@@ -160,7 +160,7 @@
         <!-- Rivista -->
         <div class="form-group mb-4">
             <label for="rivista">È una Rivista?</label>
-            <select id="rivista" class="form-select" name="rivista">
+            <select required id="rivista" class="form-select" name="rivista">
                 <option value="Si">Sì</option>
                 <option value="No" selected>No</option>
             </select>

@@ -203,6 +203,38 @@ def cambia_telefono():
 
     return render_template('cambia_telefono.html')
 
+@app.route('/utente/<int:utente_id>')
+@login_required
+def gestisci_profilo(utente_id):      
+    utente = db.session.get(Utente, utente_id)  
+    # Inizializzare le variabili per i messaggi e i dati da passare alla view
+    messaggio_prestiti = ""
+    messaggio_prenotazioni = ""
+    prestiti_attivi = []
+    prenotazioni_attive = []
+
+    # Ottenere i prestiti attivi
+    prestiti = Prestito.query.filter_by(utente_id=utente.id, terminato="No").all()
+    if prestiti:
+        prestiti_attivi = prestiti
+    else:
+        messaggio_prestiti = "Non hai ancora effettuato prestiti.<br><br>Scopri la nostra selezione di titoli e approfitta delle offerte esclusive per il tuo prossimo prestito!"
+
+    # Ottenere le prenotazioni attive
+    prenotazioni = Prenotazioni.query.filter_by(utente_id=utente.id).all()
+    if prenotazioni:
+        prenotazioni_attive = prenotazioni
+    else:
+        messaggio_prenotazioni = "Non hai ancora effettuato prenotazioni.<br><br>Esplora i corsi disponibili e prenota subito le tue lezioni per approfittare delle offerte speciali!"
+
+    # Passare i dati alla view
+    return render_template('utente_profilo.html', 
+                           utente=current_user,
+                           prestiti_attivi=prestiti_attivi,
+                           prenotazioni_attive=prenotazioni_attive,
+                           messaggio_prestiti=messaggio_prestiti,
+                           messaggio_prenotazioni=messaggio_prenotazioni)
+
 # Modifica del Testo
 @app.route('/testo/<int:testo_id>/edit', methods=['POST'])
 @login_required
