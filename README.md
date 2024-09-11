@@ -1,32 +1,3 @@
-# Biblioteca e Corsi
-
-## Descrizione
-- Benvenuto nel repository del progetto "Biblioteca e Corsi". Questa applicazione web permette agli utenti di gestire i libri, i prestiti, i corsi e le prenotazioni a questi ultimi. È sviluppata in Python utilizzando il framework Flask.
-
-## Funzionalità
-- Gestione Utenti: Registrati e accedi a un sacco di funzionalità.
-- Gestione Libri: Scopri il libro più adatto a te, anche grazie alle diverse possibilità offerte.
-- Gestione Prestiti: Prendi in prestito il libro, e ricordati di controllare la durata.
-- Gestione Corsi: Scopri i corsi offerti. Possono essere interessanti.
-- Gestione Prenotazioni: Prenota un corso e ricorda di pagare la quota, altrimenti la tua iscrizione non è valida!
-
-## Tecnologie Utilizzate
-- Python: Linguaggio di programmazione utilizzato per sviluppare l'applicazione.
-- Flask: Framework web per Python.
-- MySQL: Database utilizzato per memorizzare i dati.
-- HTML/CSS/JavaScript: Tecnologie front-end per l'interfaccia utente.
-- Bootstrap: Libreria CSS per il design responsivo.
-
-## Requisiti
-- Python 3.x
-- MySQL
-- Pip
-
-## Utilizzo
-- Accedi all'applicazione: Una volta avviata, l'applicazione sarà accessibile tramite http://localhost:5000.
-- Registrazione: Gli utenti possono registrarsi e accedere per gestire i propri prestiti e prenotazioni.
-- Amministrazione: Gli amministratori possono accedere a funzionalità aggiuntive per gestire libri, prestiti, corsi e prenotazioni.
-  
 # Library and Courses
 
 ## Description
@@ -55,3 +26,33 @@
 - Access the application: Once started, the application will be accessible via http://localhost:5000.
 - Registration: Users can register and log in to manage their loans and reservations.
 - Administration: Administrators can access additional functionality to manage books, loans, courses, and reservations.
+***
+
+# Biblioteca e Corsi
+
+## Descrizione
+- Benvenuto nel repository del progetto "Biblioteca e Corsi". Questa applicazione web permette agli utenti di gestire i libri, i prestiti, i corsi e le prenotazioni a questi ultimi. È sviluppata in Python utilizzando il framework Flask.
+
+## Funzionalità
+- Gestione Utenti: Registrati e accedi a un sacco di funzionalità.
+- Gestione Libri: Scopri il libro più adatto a te, anche grazie alle diverse possibilità offerte.
+- Gestione Prestiti: Prendi in prestito il libro, e ricordati di controllare la durata.
+- Gestione Corsi: Scopri i corsi offerti. Possono essere interessanti.
+- Gestione Prenotazioni: Prenota un corso e ricorda di pagare la quota, altrimenti la tua iscrizione non è valida!
+
+## Tecnologie Utilizzate
+- Python: Linguaggio di programmazione utilizzato per sviluppare l'applicazione.
+- Flask: Framework web per Python.
+- MySQL: Database utilizzato per memorizzare i dati.
+- HTML/CSS/JavaScript: Tecnologie front-end per l'interfaccia utente.
+- Bootstrap: Libreria CSS per il design responsivo.
+
+## Requisiti
+- Python 3.x
+- MySQL
+- Pip
+
+## Utilizzo
+- Accedi all'applicazione: Una volta avviata, l'applicazione sarà accessibile tramite http://localhost:5000.
+- Registrazione: Gli utenti possono registrarsi e accedere per gestire i propri prestiti e prenotazioni.
+- Amministrazione: Gli amministratori possono accedere a funzionalità aggiuntive per gestire libri, prestiti, corsi e prenotazioni.
