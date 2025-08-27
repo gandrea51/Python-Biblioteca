@@ -5,23 +5,21 @@ from werkzeug.security import *
 from sqlalchemy import *
 from datetime import *
 from xhtml2pdf import pisa
-import math
-import tempfile
-import re
+import math, tempfile, re
 
 '''
-    CONFIGURAZIONI
+    Initial configuration
 '''
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'why would I tell you my secret key?'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://andrea:password@localhost/Ancescao'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'my-database-link'
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.init_app(app)
 
 '''
-    CLASSI
+    Relationship
 '''
 class Utente(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -90,7 +88,7 @@ class Prenotazioni(db.Model):
     utente = db.relationship('Utente', backref=db.backref('prenotazioni_utente', lazy=True))   
 
 '''
-    FUNZIONI GENERICHE
+    Function
 '''
 
 @app.context_processor
@@ -108,30 +106,30 @@ def convert(html):
     file = tempfile.NamedTemporaryFile(delete = False, suffix = ".pdf")
     pisa_status = pisa.CreatePDF(html, dest = file)
     if pisa_status.err:
-        print("Errore durante la creazione del PDF:", pisa_status.err)
+        print("Error in the file:", pisa_status.err)
     file.close()
     return file.name
 
 def is_password_valid(password):
     if len(password) < 8:
-        return False, "La password deve contenere almeno 8 caratteri."
+        return False, "Too short."
     if not re.search("[a-z]", password):
-        return False, "La password deve contenere almeno una lettera minuscola."
+        return False, "Incorrect format of letters."
     if not re.search("[A-Z]", password):
-        return False, "La password deve contenere almeno una lettera maiuscola."
+        return False, "Incorrect format of letters."
     if not re.search("[0-9]", password):
-        return False, "La password deve contenere almeno un numero."
+        return False, "Any numbers?"
     if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password): 
-        return False, "La password deve contenere almeno un simbolo."
+        return False, "Any symbols?"
     return True, ""
 
 def is_email_valid(email):
     if Utente.query.filter_by(email = email).first() is not None:
-        return False, "L'indirizzo email è già presente."
+        return False, "Existing email"
     return True, ""
 
 '''
-    HOME PAGE
+    Introduction
 '''
 @app.route('/')
 def welcome():
@@ -165,7 +163,7 @@ def gruppo_lettura():
     return render_template('gruppo_lettura.html', month = month)
 
 '''
-    UTENTI
+    User area
 '''
 @app.route('/registrazione', methods=['GET', 'POST'])
 def registrazione():
@@ -309,7 +307,7 @@ def gestisci_profilo(utente_id):
         messaggio_prestiti=messaggio_prestiti, messaggio_prenotazioni=messaggio_prenotazioni)
 
 '''
-    LIBRI
+    Book area
 '''
 @app.route('/libri')
 def libro_index():
@@ -498,7 +496,7 @@ def imposta_si():
     return redirect(url_for('libro_index'))
 
 '''
-    PRESTITI
+    Loan area
 '''
 @app.route('/prestiti')
 @login_required
@@ -618,7 +616,7 @@ def prestito_delete(id):
     return redirect(url_for('index'))
 
 '''
-    CORSI
+    Course area
 '''
 @app.route('/corsi')
 def corso_index():
@@ -715,7 +713,7 @@ def corso_delete(id):
     return redirect(url_for('corso_index'))
 
 '''
-    PRENOTAZIONI
+    Booking area
 '''
 @app.route('/prenotazioni')
 @login_required
