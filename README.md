@@ -1,34 +1,28 @@
 # Library Booking System (Flask Web Application)
 
-## Description
-This repository contains a simple web application developed with **Python** and **Flask** for managing: Books, Courses and their bookings. The application includes:
-- User login system
-- Two user roles (member and admin)
-- Basic dashboard
-- Basic statistics (top visited/downloaded items)
+This repository contains a web application developed with Python and Flask for managing books, courses, and their bookings. The application includes user authentication, role-based access control (Member/Admin), a dashboard, and basic statistics.
 
-The backend is based on Flask and MySQL, while the frontend uses HTML, CSS, JavaScript, Bootstrap, and Font Awesome.
-This project was developed during a curricular internship and later used as the base for a Bachelor's thesis.
+This project was originally developed during a curricular internship and later served as the practical basis for my Bachelor's thesis in Computer Science.
+
+## 🛠️ Context & Technical Challenges
+* **The Challenge:** The original application was fully developed in Laravel. Due to unexpected infrastructure and platform constraints at the end of the internship, I had to completely refactor and rewrite the entire backend using Flask.
+* **The Constraints:** I had a hard deadline of **only one month** to complete the rewrite while ensuring all core features remained stable.
+* **The Result:** To respect the tight academic deadline, some structural compromises were made. However, the application was successfully delivered, fully functional, and approved for the final thesis.
 
 ## Features
-- Login / Authentication
-- User roles (member/admin)
-- Book management (CRUD)
-- Course management (CRUD)
-- Booking system
-- Basic statistics
-- Simple dashboard
+* **Authentication:** Secure user login and registration system.
+* **Role-Based Access Control:** Separate interfaces and permissions for Members and Admins.
+* **Book & Course Management:** Full CRUD operations for library resources.
+* **Booking System:** Interactive system for members to reserve books and courses.
+* **Statistics:** A simple dashboard showing top visited and downloaded items.
 
 ## Technologies Used
-- Python (3.8+ recommended)
-- Flask
-- MySQL
-- HTML / CSS / JavaScript
-- Bootstrap
-- Font Awesome
+* **Backend:** Python (3.8+) & Flask
+* **Database:** MySQL
+* **Frontend:** HTML5, CSS3, JavaScript, Bootstrap, Font Awesome
 
 ## Project Structure
-```
+```text
 Application/  
 ├── static/  
 │   ├── styles.css  
@@ -42,14 +36,9 @@ Application/
 └── Procfile
 ```
 
-> ⚠️ The structure is intentionally simple.
-> The original version was developed in Laravel, but due to platform constraints and limited time (only one month to refactor) the application was rewritten in Flask, requiring some structural compromises.
-
-## Academic Work
-This project was developed during the curricular internship of the Bachelor’s Degree in Computer Science and has been used as the basis for the final thesis.
-
-## User Registration
-Users must register manually through the UI.
-
 ## Future Improvements
-Complete reconfiguration to better address every detail
+* Refactor the project architecture to implement better design patterns (e.g., Blueprints in Flask).
+* Optimize database queries and error handling.
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
