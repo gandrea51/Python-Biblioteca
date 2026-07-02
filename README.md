@@ -1,7 +1,4 @@
 # Library Booking System (Flask Web Application)
-![License](https://img.shields.io/badge/License-AGPL_v3-blue.svg)
-![Issues](https://img.shields.io/github/issues/gandrea51/mini-library-manager)
-![Last Commit](https://img.shields.io/github/last-commit/gandrea51/mini-library-manager)
 
 ## Description
 This repository contains a simple web application developed with **Python** and **Flask** for managing: Books, Courses and their bookings. The application includes:
