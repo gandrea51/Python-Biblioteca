@@ -1,44 +1,63 @@
 # Library Booking System (Flask Web Application)
 
+> **Note**
+>
+> This repository contains the original Flask version of my university internship project, which later became the practical basis for my Bachelor's thesis in Computer Science.
+>
+> The project is no longer actively developed. A complete redesign and modernization of the application is available in **BiblioAgent** (see my GitHub profile).
+
 This repository contains a web application developed with Python and Flask for managing books, courses, and their bookings. The application includes user authentication, role-based access control (Member/Admin), a dashboard, and basic statistics.
 
-This project was originally developed during a curricular internship and later served as the practical basis for my Bachelor's thesis in Computer Science.
+Although this version successfully fulfilled the internship and thesis requirements, it was developed under strict time constraints and therefore prioritizes functionality over architecture and maintainability.
 
 ## 🛠️ Context & Technical Challenges
-* **The Challenge:** The original application was fully developed in Laravel. Due to unexpected infrastructure and platform constraints at the end of the internship, I had to completely refactor and rewrite the entire backend using Flask.
-* **The Constraints:** I had a hard deadline of **only one month** to complete the rewrite while ensuring all core features remained stable.
-* **The Result:** To respect the tight academic deadline, some structural compromises were made. However, the application was successfully delivered, fully functional, and approved for the final thesis.
+
+- **Original development:** The application was initially implemented in Laravel during my curricular internship.
+- **Unexpected rewrite:** Due to infrastructure and platform constraints near the end of the internship, I had to completely rewrite the backend using Flask.
+- **Time constraints:** The entire migration had to be completed in approximately **one month**, while preserving the original functionality.
+- **Outcome:** The application was successfully completed, presented, and approved as part of my Bachelor's thesis.
 
 ## Features
-* **Authentication:** Secure user login and registration system.
-* **Role-Based Access Control:** Separate interfaces and permissions for Members and Admins.
-* **Book & Course Management:** Full CRUD operations for library resources.
-* **Booking System:** Interactive system for members to reserve books and courses.
-* **Statistics:** A simple dashboard showing top visited and downloaded items.
+
+- Secure authentication system
+- Role-based access control (Member/Admin)
+- Book and course management
+- Booking system
+- Basic dashboard with statistics
 
 ## Technologies Used
-* **Backend:** Python (3.8+) & Flask
-* **Database:** MySQL
-* **Frontend:** HTML5, CSS3, JavaScript, Bootstrap, Font Awesome
+
+- **Backend:** Python 3 & Flask
+- **Database:** MySQL
+- **Frontend:** HTML5, CSS3, JavaScript, Bootstrap, Font Awesome
 
 ## Project Structure
+
 ```text
-Application/  
-├── static/  
-│   ├── styles.css  
-│   └── img_logo.png  
-├── templates/  
-│   ├── index.html  
-│   ├── ...  
-│   └── welcome.html  
-├── app.py  
-├── requirements.txt  
+Application/
+├── static/
+│   ├── styles.css
+│   └── img_logo.png
+├── templates/
+│   ├── index.html
+│   ├── ...
+│   └── welcome.html
+├── app.py
+├── requirements.txt
 └── Procfile
 ```
 
-## Future Improvements
-* Refactor the project architecture to implement better design patterns (e.g., Blueprints in Flask).
-* Optimize database queries and error handling.
+## Lessons Learned
+
+Developing this project under a tight deadline taught me the importance of:
+
+- planning a scalable architecture from the beginning;
+- separating application logic into reusable modules;
+- using Flask Blueprints and a cleaner project structure;
+- improving database design and code maintainability.
+
+These lessons directly inspired the development of my later project, **BiblioAgent**, which redesigns the application with a more modular architecture, an improved user interface, and additional functionality.
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
